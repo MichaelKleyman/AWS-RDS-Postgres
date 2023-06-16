@@ -13,6 +13,17 @@ const pool = new Pool({
   port: 5432,
 });
 
+app.get('/users', async (req, res) => {
+  try {
+    const data = await pool.query('SELECT * from "User"');
+    console.log(data.rows);
+    res.send(data.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error retrieving data');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
